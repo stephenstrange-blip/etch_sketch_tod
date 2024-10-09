@@ -2,7 +2,7 @@
 let minHeight = 115;
 let gridSize = 0;
 
-
+//set initial grid layout
 setGrid(16);
 addHover();
 
@@ -20,18 +20,19 @@ function setGrid (size) {
     let maxGridWidth = parseInt(maxRowWidth[0]) / 16;
     console.log(maxGridWidth);
 
-
+    //outer loop creates row
     for (let i = 1; i <= size; i++){
 
         let gridRow = document.createElement("div");
         let className = "gridRow"// + i.toString();
 
         gridRow.classList.add(className);
-        //set width of row to full page width
+        //set width of row to full container width
         gridRow.setAttribute("style", `width: ${maxRowWidth[0]}px; height: fit-content; display: flex`);
         
         container.appendChild(gridRow)
 
+        //inner loop creates each square grid
         for (let j = 1; j <= size; j++){
             
             let grid = document.createElement("div");
@@ -60,7 +61,6 @@ function addHover(){
 }
 
 const btn = document.querySelector(".btn");
-
 btn.addEventListener("click", () => {
     
     let input;
