@@ -45,16 +45,18 @@ function setGrid (size) {
 }
 
 function addHover(){
-const grids = document.querySelectorAll(".grid");
-grids.forEach((grid) => {
-    //background changes when mouse pointer is on the grid and reverts when the mouse pointer leaves.
-    grid.addEventListener("mouseover", () =>{
-        grid.style["background-color"] = "lightblue";
-    }) 
-    grid.addEventListener("mouseout", () => {
-        grid.style["background-color"] = "transparent";
-    })      
-})
+    const grids = document.querySelectorAll(".grid");
+
+    grids.forEach((grid) => {
+        //background changes when mouse pointer is on the grid and reverts when the mouse pointer leaves.
+        grid.addEventListener("mouseover", () =>{
+            let hexColor = Math.floor(Math.random()*8**8).toString(16);
+            grid.style["background-color"] = `#${hexColor}`;
+        }) 
+        grid.addEventListener("mouseout", () => {
+            grid.style["background-color"] = "transparent";
+        })      
+    })
 }
 
 const btn = document.querySelector(".btn");
