@@ -1,47 +1,79 @@
 
 let minHeight = 115;
+let gridSize = 0;
 
-const container = document.querySelector(".grid-container");
-container.setAttribute("style", "padding:0; margin:0; display:flex; flex-flow: row wrap; box-sizing: border-box; width: 100%;");
 
-//since width of container is in percent, get the pixel value
-//return value is string with format **px, so separate num value from px 
-let maxRowWidth = window.getComputedStyle(container, null).getPropertyValue("width").split("px");
+setGrid(16);
+addHover();
 
-//each row should exactly fit 16 grid
-let maxGridWidth = parseInt(maxRowWidth[0]) / 16;
-console.log(maxGridWidth);
+function setGrid (size) {
+    const container = document.createElement("div");
+    container.classList.add("grid-container");
+    container.setAttribute("style", "padding:0; margin:0; display:flex; flex-flow: row wrap; box-sizing: border-box; width: 100%;");
 
-for (let i = 1; i <= 16; i++){
+    document.body.appendChild(container);
+    //since width of container is in percent, get the pixel value
+    //return value is string with format **px, so separate num value from px 
+    let maxRowWidth = window.getComputedStyle(container, null).getPropertyValue("width").split("px");
 
-    let gridRow = document.createElement("div");
-    let className = "gridRow"// + i.toString();
+    //each row should exactly fit 16 grid
+    let maxGridWidth = parseInt(maxRowWidth[0]) / 16;
+    console.log(maxGridWidth);
 
-    gridRow.classList.add(className);
-    //set width of row to full page width
-    gridRow.setAttribute("style", `width: ${maxRowWidth[0]}px; height: fit-content; border: 2px solid green; display: flex`);
-    
-    container.appendChild(gridRow)
 
-    for (let j = 1; j <= 16; j++){
+    for (let i = 1; i <= size; i++){
+
+        let gridRow = document.createElement("div");
+        let className = "gridRow"// + i.toString();
+
+        gridRow.classList.add(className);
+        //set width of row to full page width
+        gridRow.setAttribute("style", `width: ${maxRowWidth[0]}px; height: fit-content; display: flex`);
         
-        let grid = document.createElement("div");
-        let className = "grid"// + j.toString();
+        container.appendChild(gridRow)
 
-        grid.classList.add(className);
-        grid.setAttribute("style", `width: ${maxGridWidth}px; min-height: ${minHeight}px; border: 1px solid #000000; `)
-        gridRow.appendChild(grid);
-    }  
+        for (let j = 1; j <= size; j++){
+            
+            let grid = document.createElement("div");
+            let className = "grid"// + j.toString();
+
+            grid.classList.add(className);
+            grid.setAttribute("style", `width: ${maxGridWidth}px; min-height: ${minHeight}px; border: 1px solid #000000; `)
+            gridRow.appendChild(grid);
+        }  
+    }
 }
 
+function addHover(){
 const grids = document.querySelectorAll(".grid");
 grids.forEach((grid) => {
+    //background changes when mouse pointer is on the grid and reverts when the mouse pointer leaves.
     grid.addEventListener("mouseover", () =>{
         grid.style["background-color"] = "lightblue";
     }) 
     grid.addEventListener("mouseout", () => {
         grid.style["background-color"] = "transparent";
     })      
+})
+}
+
+const btn = document.querySelector(".btn");
+
+btn.addEventListener("click", () => {
+    
+    let input;
+
+    do {
+        input = prompt("Please input a number between 1 and 100");
+        input = parseInt(input);
+    } while ((input<0) || (input >100));
+
+    gridSize = input;
+    const body = document.body;
+    const childNodes = body.lastElementChild;
+    body.removeChild(childNodes);
+    setGrid(gridSize);
+    addHover();
 })
 
 
